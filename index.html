@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SUEROTERAPIA | Protocolos de Salud e Hidratación IV</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="ambient-glow"></div>
+
+    <!-- HEADER / NAVEGACIÓN -->
+    <header>
+        <!-- LOGO CON IMAGEN ADAPTABLE (MODO CLARO Y OSCURO) -->
+        <div class="logo">
+            <img src="/static/logo.png" alt="Logo Sueroterapia" class="logo-img logo-light">
+            <img src="/static/logo.png" alt="Logo Sueroterapia" class="logo-img logo-dark">
+        </div>
+
+        <!-- Botón Hamburguesa Móvil -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Abrir Menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- Navegación con Botón de Tema al Final -->
+        <nav>
+            <ul class="nav-links" id="navLinks">
+                <li><a class="nav-item active" data-target="inicio">Inicio</a></li>
+                <li><a class="nav-item" data-target="catalogo">Catálogo</a></li>
+                <li><a class="nav-item" data-target="beneficios">Seguridad</a></li>
+                <li><a class="nav-item" data-target="contacto">Contacto</a></li>
+                <li class="theme-li">
+                    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar Tema">
+                        <span class="theme-icon" id="themeIcon">🌙</span>
+                        <span class="theme-label" id="themeLabel">Modo Oscuro</span>
+                    </button>
+                </li>
+            </ul>
+            <div class="nav-indicator" id="indicator"></div>
+        </nav>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main>
+
+        <!-- SECCIÓN 1: INICIO -->
+        <section id="inicio" class="section-view active">
+            <div class="hero">
+                <div class="hero-content">
+                    <div class="clinical-badge">
+                        <span class="badge-dot"></span> BIOTECNOLOGÍA AVANZADA
+                    </div>
+                    <h1>Optimización Celular y Péptidos de Alta Pureza</h1>
+                    <p>Formulaciones de vanguardia para longevidad, control metabólico, recuperación muscular y rejuvenecimiento cutáneo. Resultados respaldados por la ciencia.</p>
+                    <div class="hero-actions">
+                        <a href="https://wa.me/573246100086?text=Hola,%20deseo%20agendar%20una%20valoracion%20medica%20por%20sueroterapia"
+                            target="_blank" class="btn-primary full-width-mobile">
+                            Asesoría por WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-card">
+                    <div class="hero-card-header">
+                        <span class="status-indicator"></span>
+                        <span>ASESORÍA PERSONALIZADA</span>
+                    </div>
+                    <h3>Calidad Farmacéutica Nexis</h3>
+                    <p>Péptidos liofilizados de alta pureza, probados por HPLC, con empaque seguro y envío discreto a todo el país.</p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="num">99%</div>
+                            <div class="label">Pureza HPLC</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="num">100%</div>
+                            <div class="label">Productos Certificados</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NUEVA PREVISUALIZACIÓN DE PRODUCTOS EN INICIO -->
+            <div class="home-catalog-preview">
+                <div class="preview-header">
+                    <div>
+                        <span class="section-subtitle">VISTA PREVIA</span>
+                        <h3>Productos Destacados</h3>
+                    </div>
+                    <button type="button" class="btn-secondary-catalog" id="goToCatalogBtn">
+                        Ver Catálogo Completo &rarr;
+                    </button>
+                </div>
+                <div class="preview-grid">
+                    <div class="preview-card" data-go-catalog>
+                        <div class="preview-img-box">
+                            <img src="/static/ghk-cu_V1.jpg" alt="GHK-CU">
+                        </div>
+                        <h4>GHK-CU</h4>
+                        <p class="preview-price">$ 180.000</p>
+                    </div>
+                    <div class="preview-card" data-go-catalog>
+                        <div class="preview-img-box">
+                            <img src="/static/retatrutide_segundoProducto.jpg" alt="RETATRUTIDE">
+                        </div>
+                        <h4>RETATRUTIDE</h4>
+                        <p class="preview-price">$ 210.000</p>
+                    </div>
+                    <div class="preview-card" data-go-catalog>
+                        <div class="preview-img-box">
+                            <img src="/static/cjc-125.jpg" alt="CJC-1295">
+                        </div>
+                        <h4>CJC-1295 + Ipamorelin</h4>
+                        <p class="preview-price">$ 250.000</p>
+                    </div>
+                    <div class="preview-card" data-go-catalog>
+                        <div class="preview-img-box">
+                            <img src="/static/bpc-157.jpg" alt="BPC-157">
+                        </div>
+                        <h4>BPC-157 + TB-500</h4>
+                        <p class="preview-price">$ 195.000</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: CATÁLOGO DE SUEROS CON IMÁGENES -->
+        <section id="catalogo" class="section-view">
+            <div class="section-header">
+                <span class="section-subtitle">FORMULACIONES MÉDICAS</span>
+                <h2>Catálogo de Sueroterapia</h2>
+                <p>Explora nuestras 9 formulaciones biomédicas de hidratación y salud.</p>
+            </div>
+
+            <!-- CARRUSEL (DESKTOP) / LISTA VERTICAL (MÓVIL) -->
+            <div class="carousel-wrapper" id="carouselWrapper">
+                <button class="carousel-nav prev" id="prevBtn" aria-label="Anterior">&#10094;</button>
+
+                <div class="carousel-track-container" id="trackContainer">
+                    <div class="carousel-track" id="carouselTrack">
+
+                        <!-- Item 1 -->
+                        <div class="serum-card">
+                            <div class="serum-img-container">
+                                <img src="/static/ghk-cu_V1.jpg" alt="Suero Detox & Recovery" class="serum-img">
+                            </div>
+                            <div class="serum-header-info">
+                                <h3>GHK-CU</h3>
+                                <span class="serum-tag">Péptido Biomimético de Cobre</span>
+                                <p class="serum-summary">Potentes propiedades regenerativas, antioxidantes y antiinflamatorias a nivel celular.</p>
+                            </div>
+                            <div class="serum-footer">
+                                <div class="price-container">
+                                    <div class="price">$ 180.000</div>
+                                </div>
+                                <a href="https://wa.me/573246100086?text=Hola,%20quiero%20comprar%20GHK-CU"
+                                    target="_blank" class="buy-btn">
+                                    🛒 Comprar
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="serum-card">
+                            <div class="serum-img-container">
+                                <img src="/static/retatrutide_segundoProducto.jpg" alt="Suero Immuno Shield" class="serum-img">
+                            </div>
+                            <div class="serum-header-info">
+                                <h3>RETATRUTIDE</h3>
+                                <span class="serum-tag">Agonista Triple (GLP-1, GIP y Glucagón)</span>
+                                <p class="serum-summary">Actúa sobre las vias metabólicas apoyando el control de peso, la composición corporal y la salud metabólica.</p>
+                            </div>
+                            <div class="serum-footer">
+                                <div class="price-container">
+                                    <div class="price">$ 210.000</div>
+                                </div>
+                                <a href="https://wa.me/573246100086?text=Hola,%20quiero%20comprar%20el%20RETATRUTIDE"
+                                    target="_blank" class="buy-btn">
+                                    🛒 Comprar
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="serum-card">
+                            <div class="serum-img-container">
+                                <img src="/static/cjc-125.jpg" alt="Suero Glutatión Anti-Age" class="serum-img">
+                            </div>
+                            <div class="serum-header-info">
+                                <h3>CJC-1295 + Ipamorelin</h3>
+                                <span class="serum-tag">Péptidos Sinérgicos</span>
+                                <p class="serum-summary">Estimulan la producción natural de hormona del crecimiento favoreciendo el desarrollo muscular, la recuperación y la quema de grasa.</p>
+                            </div>
+                            <div class="serum-footer">
+                                <div class="price-container">
+                                    <div class="price">$ 250.000</div>
+                                </div>
+                                <a href="https://wa.me/573246100086?text=Hola,%20quiero%20comprar%20el%20CJC-1295%20+%20Ipamorelin"
+                                    target="_blank" class="buy-btn">
+                                    🛒 Comprar
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Item 4 -->
+                        <div class="serum-card">
+                            <div class="serum-img-container">
+                                <img src="/static/bpc-157.jpg" alt="Suero Energy Rush" class="serum-img">
+                            </div>
+                            <div class="serum-header-info">
+                                <h3>BPC-157 + TB-500</h3>
+                                <span class="serum-tag">Péptidos Regenerativos</span>
+                                <p class="serum-summary">Acelera la reparación de tejidos, tendones, ligamentos y músculos, reduciendo la inflamación.</p>
+                            </div>
+                            <div class="serum-footer">
+                                <div class="price-container">
+                                    <div class="price">$ 195.000</div>
+                                </div>
+                                <a href="https://wa.me/573246100086?text=Hola,%20quiero%20comprar%20el%20BPC-157%20+%20TB-500"
+                                    target="_blank" class="buy-btn">
+                                    🛒 Comprar
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Item 5 -->
+                        <div class="serum-card">
+                            <div class="serum-img-container">
+                                <img src="/static/glow_blend_quinto_producto.jpg" alt="Suero Anti-Stress" class="serum-img">
+                            </div>
+                            <div class="serum-header-info">
+                                <h3>GLOW BLEND</h3>
+                                <span class="serum-tag">Fórmula de Bienestar y Luminosidad</span>
+                                <p class="serum-summary">Promueve la regeneración celular, la producción de colágeno y la protección antioxidante para mantener una piel radiante y joven.</p>
+                            </div>
+                            <div class="serum-footer">
+                                <div class="price-container">
+                                    <div class="price">$ 200.000</div>
+                                </div>
+                                <a href="https://wa.me/573018807172?text=Hola,%20quiero%20comprar%20el%20Suero%20GLOW%20BLEND"
+                                    target="_blank" class="buy-btn">
+                                    🛒 Comprar
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Item 6 -->
+                        <div class="serum-card">
+                            <div class="serum-img-container">
+                                <img src="/static/tesamorelin_sextoProducto.jpg" alt="Suero Pro-Sport Recovery" class="serum-img">
+                            </div>
+                            <div class="serum-header-info">
+                                <h3>TESAMORELIN</h3>
+                                <span class="serum-tag">Péptido GHRH Análogo</span>
+                                <p class="serum-summary">Estimula la producción natural de hormona del crecimiento para apoyar el bienestar, la composición corporal y la vitalidad.</p>
+                            </div>
+                            <div class="serum-footer">
+                                <div class="price-container">
+                                    <div class="price">$ 220.000</div>
+                                </div>
+                                <a href="https://wa.me/573246100086?text=Hola,%20quiero%20comprar%20el%20TESAMORELIN"
+                                    target="_blank" class="buy-btn">
+                                    🛒 Comprar
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Item 7 -->
+                        <div class="serum-card">
+                            <div class="serum-img-container">
+                                <img src="/static/pt-141_septimoProducto.jpg" alt="Suero Slim & Fat Burner" class="serum-img">
+                            </div>
+                            <div class="serum-header-info">
+                                <h3>PT-141</h3>
+                                <span class="serum-tag">Péptido de Bienestar</span>
+                                <p class="serum-summary">Aumenta la libido y mejora la función sexual de forma natural y segura.</p>
+                            </div>
+                            <div class="serum-footer">
+                                <div class="price-container">
+                                    <div class="price">$ 230.000</div>
+                                </div>
+                                <a href="https://wa.me/573246100086?text=Hola,%20quiero%20comprar%20el%20PT-141"
+                                    target="_blank" class="buy-btn">
+                                    🛒 Comprar
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Item 8 -->
+                        <div class="serum-card">
+                            <div class="serum-img-container">
+                                <img src="/static/cagrireta_octavoProducto.jpg" alt="Suero Collagen & Glow Boost" class="serum-img">
+                            </div>
+                            <div class="serum-header-info">
+                                <h3>CagriReta</h3>
+                                <span class="serum-tag">Péptidos Sinérgicos</span>
+                                <p class="serum-summary">Apoya la pérdida de grasa, mejora el metabolismo, regula el apetito y optimiza la composición corporal.</p>
+                            </div>
+                            <div class="serum-footer">
+                                <div class="price-container">
+                                    <div class="price">$ 240.000</div>
+                                </div>
+                                <a href="https://wa.me/573246100086?text=Hola,%20quiero%20comprar%20el%20CagriReta"
+                                    target="_blank" class="buy-btn">
+                                    🛒 Comprar
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Item 9 -->
+                        <div class="serum-card">
+                            <div class="serum-img-container">
+                                <img src="/static/mots-c_novenoProducto.jpg" alt="Suero Post-Party Hydrate" class="serum-img">
+                            </div>
+                            <div class="serum-header-info">
+                                <h3>MOTS-C</h3>
+                                <span class="serum-tag">Péptido Mitocondrial</span>
+                                <p class="serum-summary">Regula el metabolismo energético, mejora el rendimiento físico y optimiza la función celular.</p>
+                            </div>
+                            <div class="serum-footer">
+                                <div class="price-container">
+                                    <div class="price">$ 175.000</div>
+                                </div>
+                                <a href="https://wa.me/573246100086?text=Hola,%20quiero%20comprar%20el%20MOTS-C"
+                                    target="_blank" class="buy-btn">
+                                    🛒 Comprar
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Item 10 -->
+                        <div class="serum-card">
+                            <div class="serum-img-container">
+                                <img src="/static/selank_decimoProducto.jpg" alt="Suero Post-Party Hydrate" class="serum-img">
+                            </div>
+                            <div class="serum-header-info">
+                                <h3>SELANK</h3>
+                                <span class="serum-tag">Péptido Nootrópico</span>
+                                <p class="serum-summary">Reduce la ansiedad y el estrés, optimizando la concentración, la memoria y el rendimiento cognitivo.</p>
+                            </div>
+                            <div class="serum-footer">
+                                <div class="price-container">
+                                    <div class="price">$ 175.000</div>
+                                </div>
+                                <a href="https://wa.me/573246100086?text=Hola,%20quiero%20comprar%20el%20SELANK"
+                                    target="_blank" class="buy-btn">
+                                    🛒 Comprar
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button class="carousel-nav next" id="nextBtn" aria-label="Siguiente">&#10095;</button>
+            </div>
+
+            <!-- PUNTOS INDICADORES (DESKTOP) -->
+            <div class="carousel-dots" id="carouselDots"></div>
+        </section>
+
+        <!-- SECCIÓN 3: SEGURIDAD -->
+        <section id="beneficios" class="section-view">
+            <div class="section-header">
+                <span class="section-subtitle">CALIDAD Y CONTROL FARMACÉUTICO</span>
+                <h2>Garantía y Pureza Certificada</h2>
+                <p>Estándares de laboratorio y rigor científico aplicados a cada una de nuestras formulaciones.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-box">
+                    <div class="feature-icon">🔬</div>
+                    <h3>Pureza ≥99% HPLC</h3>
+                    <p>Cada lote es sometido a pruebas de cromatografía (HPLC) para garantizar la máxima bioactividad, concentración real y un producto libre de impurezas.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">❄️</div>
+                    <h3>Cadena de Frío Garantizada</h3>
+                    <p>Conservación estricta entre 2°C y 8°C. Envíos en empaque térmico de alta protección para preservar intacta la estructura del péptido.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🚚</div>
+                    <h3>Despachos Seguros y Asesoría</h3>
+                    <p>Envíos discretos y rápidos a todo el país, respaldados con acompañamiento directo por WhatsApp para resolver dudas sobre tus protocolos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: CONTACTO -->
+        <section id="contacto" class="section-view">
+            <div class="contact-card">
+                <div class="contact-info">
+                    <span class="section-subtitle">CANAL DIRECTO</span>
+                    <h3>Asesoría Personalizada y Pedidos</h3>
+                    <p>Contáctanos para resolver cualquier inquietud sobre nuestros péptidos, guiarte en tus protocolos o coordinar tu despacho.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="item-icon">💬</span>
+                            <div>
+                                <strong>WhatsApp Oficial</strong>
+                                <p>+57 324 610 0086</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="item-icon">📍</span>
+                            <div>
+                                <strong>Cobertura</strong>
+                                <p>Atención Domiciliaria y Consultorio</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="item-icon">🕒</span>
+                            <div>
+                                <strong>Horario</strong>
+                                <p>Lunes a Domingo: 7:00 AM - 8:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-cta-box">
+                    <a href="https://wa.me/573246100086" target="_blank"
+                        class="btn-primary full-width-mobile text-center">
+                        Escribir por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL DE VISUALIZACIÓN DE IMAGEN AMPLIADA -->
+    <div class="image-modal" id="imageModal">
+        <span class="modal-close" id="modalClose">&times;</span>
+        <img class="modal-content" id="modalImg" alt="Suero ampliado">
+    </div>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+</body>
+
+</html>
