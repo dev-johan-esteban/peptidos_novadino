@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     /* ==========================================================================
        1. INTERRUPTOR MODO OSCURO / MODO CLARO
        ========================================================================== */
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!dotsContainer || window.innerWidth <= 768) return;
         dotsContainer.innerHTML = '';
         const maxIndex = getMaxIndex();
-        
+
         for (let i = 0; i <= maxIndex; i++) {
             const dot = document.createElement('div');
             dot.classList.add('dot');
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const cardWidth = cards[0].getBoundingClientRect().width;
         const gap = parseFloat(window.getComputedStyle(track).gap) || 20;
         const moveAmount = (cardWidth + gap) * currentIndex;
-        
+
         track.style.transform = `translateX(-${moveAmount}px)`;
 
         const dots = document.querySelectorAll('.dot');
@@ -256,4 +256,256 @@ document.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }
     });
+
+
+/* ==========================================================================
+       5. SISTEMA DE CARRITO DE COMPRAS Y PAGO CONTRA ENTREGA
+       ========================================================================== */
+let cart = JSON.parse(localStorage.getItem('suero_cart')) || [];
+
+const cartHeaderBtn = document.getElementById('cartHeaderBtn');
+const cartBadge = document.getElementById('cartBadge');
+const cartDrawer = document.getElementById('cartDrawer');
+const cartOverlay = document.getElementById('cartOverlay');
+const cartCloseBtn = document.getElementById('cartCloseBtn');
+const cartItemsContainer = document.getElementById('cartItemsContainer');
+const cartTotalAmount = document.getElementById('cartTotalAmount');
+const checkoutBtn = document.getElementById('checkoutBtn');
+
+const checkoutModalOverlay = document.getElementById('checkoutModalOverlay');
+const checkoutCloseBtn = document.getElementById('checkoutCloseBtn');
+const codForm = document.getElementById('codForm');
+const checkoutSummaryList = document.getElementById('checkoutSummaryList');
+const checkoutTotal = document.getElementById('checkoutTotal');
+
+function saveCart() {
+    localStorage.setItem('suero_cart', JSON.stringify(cart));
+    updateCartUI();
+}
+
+function formatPrice(amount) {
+    return '$ ' + amount.toLocaleString('es-CO');
+}
+
+function parsePrice(priceString) {
+    return parseInt(priceString.replace(/[^0-9]/g, ''), 10) || 0;
+}
+
+function addToCart(title, priceStr, imgSrc) {
+    const price = parsePrice(priceStr);
+    const existingItem = cart.find(item => item.title === title);
+
+    if (existingItem) {
+        existingItem.qty += 1;
+    } else {
+        cart.push({ title, price, imgSrc, qty: 1 });
+    }
+
+    saveCart();
+    openCartDrawer();
+}
+
+function updateCartUI() {
+    const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+    if (cartBadge) cartBadge.textContent = totalItems;
+
+    if (!cartItemsContainer) return;
+
+    if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p style="text-align:center; color: var(--text-muted); margin-top:2rem;">Tu carrito está vacío 🛒</p>';
+        if (cartTotalAmount) cartTotalAmount.textContent = '$ 0';
+        if (checkoutBtn) checkoutBtn.disabled = true;
+        return;
+    }
+
+    let total = 0;
+    cartItemsContainer.innerHTML = '';
+
+    cart.forEach((item, index) => {
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+                <img src="${item.imgSrc}" alt="${item.title}" class="cart-item-img">
+                <div class="cart-item-info">
+                    <div class="cart-item-title">${item.title}</div>
+                    <div class="cart-item-price">${formatPrice(item.price)}</div>
+                    <div class="cart-item-controls">
+                        <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                        <span>${item.qty}</span>
+                        <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                    </div>
+                </div>
+                <button class="qty-btn" onclick="removeItem(${index})" style="color:red; border:none; background:none;">🗑️</button>
+            `;
+        cartItemsContainer.appendChild(div);
+    });
+
+    if (cartTotalAmount) cartTotalAmount.textContent = formatPrice(total);
+    if (checkoutBtn) checkoutBtn.disabled = false;
+}
+
+window.changeQty = function (index, change) {
+    cart[index].qty += change;
+    if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+    }
+    saveCart();
+};
+
+window.removeItem = function (index) {
+    cart.splice(index, 1);
+    saveCart();
+};
+
+// Cambiar comportamiento de los botones de "🛒 Comprar" para añadir al carrito
+const buyButtons = document.querySelectorAll('.buy-btn');
+buyButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const card = btn.closest('.serum-card');
+        if (!card) return;
+        const title = card.querySelector('h3').innerText;
+        const priceStr = card.querySelector('.price').innerText;
+        const imgSrc = card.querySelector('.serum-img').src;
+
+        addToCart(title, priceStr, imgSrc);
+    });
 });
+
+function openCartDrawer() {
+    if (cartDrawer) cartDrawer.classList.add('open');
+    if (cartOverlay) cartOverlay.classList.add('active');
+}
+
+function closeCartDrawer() {
+    if (cartDrawer) cartDrawer.classList.remove('open');
+    if (cartOverlay) cartOverlay.classList.remove('active');
+}
+
+if (cartHeaderBtn) cartHeaderBtn.addEventListener('click', openCartDrawer);
+if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCartDrawer);
+if (cartOverlay) cartOverlay.addEventListener('click', closeCartDrawer);
+
+/* MODAL CHECKOUT PAGO CONTRA ENTREGA */
+if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', () => {
+        closeCartDrawer();
+        renderCheckoutSummary();
+        if (checkoutModalOverlay) checkoutModalOverlay.classList.add('active');
+    });
+}
+
+if (checkoutCloseBtn) {
+    checkoutCloseBtn.addEventListener('click', () => {
+        if (checkoutModalOverlay) checkoutModalOverlay.classList.remove('active');
+    });
+}
+
+function renderCheckoutSummary() {
+    if (!checkoutSummaryList) return;
+    checkoutSummaryList.innerHTML = '';
+    let total = 0;
+
+    cart.forEach(item => {
+        const subtotal = item.price * item.qty;
+        total += subtotal;
+        const p = document.createElement('p');
+        p.style.fontSize = '0.85rem';
+        p.style.margin = '4px 0';
+        p.innerHTML = `• ${item.title} x${item.qty} - <strong>${formatPrice(subtotal)}</strong>`;
+        checkoutSummaryList.appendChild(p);
+    });
+
+    if (checkoutTotal) checkoutTotal.textContent = formatPrice(total);
+}
+
+/* ENVÍO DE PEDIDO POR WHATSAPP */
+if (codForm) {
+    codForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('clientName').value;
+        const phone = document.getElementById('clientPhone').value;
+        const city = document.getElementById('clientCity').value;
+        const address = document.getElementById('clientAddress').value;
+        const notes = document.getElementById('clientNotes').value;
+
+        let total = 0;
+        let itemsMessage = '';
+
+        cart.forEach(item => {
+            const subtotal = item.price * item.qty;
+            total += subtotal;
+            itemsMessage += `\n- ${item.title} (x${item.qty}) : ${formatPrice(subtotal)}`;
+        });
+
+        const message = `🚚 *NUEVO PEDIDO - PAGO CONTRA ENTREGA*%0A%0A` +
+            `👤 *Cliente:* ${name}%0A` +
+            `📱 *Teléfono:* ${phone}%0A` +
+            `📍 *Ciudad:* ${city}%0A` +
+            `🏠 *Dirección:* ${address}%0A` +
+            (notes ? `📝 *Notas:* ${notes}%0A` : '') +
+            `%0A📦 *PRODUCTOS:*${itemsMessage}%0A%0A` +
+            `💰 *TOTAL A PAGAR AL REPARTIDOR:* ${formatPrice(total)}`;
+
+        const whatsappNumber = '573246100086';
+        const url = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+        // Vaciar carrito tras la compra
+        cart = [];
+        saveCart();
+
+        if (checkoutModalOverlay) checkoutModalOverlay.classList.remove('active');
+        window.open(url, '_blank');
+    });
+}
+
+// Inicializar UI al cargar la página
+updateCartUI();
+
+/* ==========================================================================
+       6. MAPA DINÁMICO DE GOOGLE MAPS EN CHECKOUT
+       ========================================================================== */
+    const clientAddressInput = document.getElementById('clientAddress');
+    const clientCityInput = document.getElementById('clientCity');
+    const mapContainer = document.getElementById('mapContainer');
+    const googleMap = document.getElementById('googleMap');
+
+    let typingTimer;
+    const doneTypingInterval = 1000; // Espera 1 segundo después de que el usuario deje de escribir
+
+    function updateMap() {
+        const address = clientAddressInput.value.trim();
+        const city = clientCityInput.value.trim();
+
+        // Solo muestra el mapa si el usuario ha escrito al menos la dirección y la ciudad
+        if (address.length > 5 && city.length > 3) {
+            // Unimos la dirección, la ciudad y el país (Colombia) para mayor precisión
+            const query = encodeURIComponent(`${address}, ${city}, Colombia`);
+            
+            // Actualizamos el iframe con la URL de búsqueda de Google Maps
+            googleMap.src = `https://maps.google.com/maps?q=${query}&t=m&z=15&output=embed&iwloc=near`;
+            mapContainer.style.display = 'block';
+        } else {
+            mapContainer.style.display = 'none';
+        }
+    }
+
+    if (clientAddressInput && clientCityInput) {
+        // Escuchar cuando el usuario escribe en la dirección
+        clientAddressInput.addEventListener('input', () => {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(updateMap, doneTypingInterval);
+        });
+
+        // Escuchar cuando el usuario escribe en la ciudad
+        clientCityInput.addEventListener('input', () => {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(updateMap, doneTypingInterval);
+        });
+    }
+});
+
