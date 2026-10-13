@@ -1227,6 +1227,71 @@ main {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   SUPERCOMBOS Y PROMOS
+   ========================================================================== */
+.combos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.combo-card {
+    border: 2px solid var(--primary-teal);
+    position: relative;
+    background: linear-gradient(to bottom, var(--card-bg), var(--bg-main));
+}
+
+.combo-badge {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: #f59e0b;
+    /* Color naranja/dorado para destacar */
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+}
+
+.promo-banner-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: var(--mint-light);
+    border: 1px dashed var(--primary-teal);
+    padding: 1.2rem;
+    border-radius: 12px;
+    margin: 0 auto 2rem auto;
+    max-width: 800px;
+}
+
+.promo-icon {
+    font-size: 2rem;
+}
+
+.promo-text {
+    font-size: 0.9rem;
+    color: var(--clinical-dark);
+    line-height: 1.5;
+}
+
+/* Modo oscuro ajustes para el banner */
+[data-theme="dark"] .promo-banner-box {
+    background: rgba(45, 212, 191, 0.1);
 }
